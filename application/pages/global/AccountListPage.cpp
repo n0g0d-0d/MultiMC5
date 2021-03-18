@@ -201,15 +201,9 @@ void AccountListPage::on_actionDeleteSkin_triggered()
         return;
 
     QModelIndex selected = selection.first();
-    AuthSessionPtr session = std::make_shared<AuthSession>();
     MojangAccountPtr account = selected.data(MojangAccountList::PointerRole).value<MojangAccountPtr>();
-    auto login = account->login(session);
     ProgressDialog prog(this);
-    if (prog.execWithTask((Task*)login.get()) != QDialog::Accepted) {
-        CustomMessageBox::selectable(this, tr("Skin Delete"), tr("Failed to login!"), QMessageBox::Warning)->exec();
-        return;
-    }
-    auto deleteSkinTask = std::make_shared<SkinDelete>(this, session);
+    auto deleteSkinTask = std::make_shared<SkinDelete>(this, account->accessToken());
     if (prog.execWithTask((Task*)deleteSkinTask.get()) != QDialog::Accepted) {
         CustomMessageBox::selectable(this, tr("Skin Delete"), tr("Failed to delete current skin!"), QMessageBox::Warning)->exec();
         return;

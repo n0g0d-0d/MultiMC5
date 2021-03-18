@@ -760,36 +760,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new MainWindow
 
     auto accounts = MMC->accounts();
 
-    QList<Net::Download::Ptr> skin_dls;
-    for (int i = 0; i < accounts->count(); i++)
-    {
-        auto account = accounts->at(i);
-        if (!account)
-        {
-            qWarning() << "Null account at index" << i;
-            continue;
-        }
-        for (auto profile : account->profiles())
-        {
-            auto meta = Env::getInstance().metacache()->resolveEntry("skins", profile.id + ".png");
-            auto action = Net::Download::makeCached(QUrl(BuildConfig.SKINS_BASE + profile.id + ".png"), meta);
-            skin_dls.append(action);
-            meta->setStale(true);
-        }
-    }
-    if (!skin_dls.isEmpty())
-    {
-        auto job = new NetJob("Startup player skins download");
-        connect(job, &NetJob::succeeded, this, &MainWindow::skinJobFinished);
-        connect(job, &NetJob::failed, this, &MainWindow::skinJobFinished);
-        for (auto action : skin_dls)
-        {
-            job->addNetAction(action);
-        }
-        skin_download_job.reset(job);
-        job->start();
-    }
-
     // load the news
     {
         m_newsChecker->reloadNews();
@@ -848,12 +818,6 @@ void MainWindow::konamiTriggered()
 {
     // ENV.enableFeature("NewModsPage");
     qDebug() << "Super Secret Mode ACTIVATED!";
-}
-
-void MainWindow::skinJobFinished()
-{
-    activeAccountChanged();
-    skin_download_job.reset();
 }
 
 void MainWindow::showInstanceContextMenu(const QPoint &pos)

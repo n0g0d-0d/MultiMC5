@@ -1146,7 +1146,7 @@ bool PackProfile::installCustomJar_internal(QString filepath)
     return true;
 }
 
-std::shared_ptr<LaunchProfile> PackProfile::getProfile() const
+std::shared_ptr<LaunchProfile> PackProfile::getLaunchProfile() const
 {
     if(!d->m_profile)
     {

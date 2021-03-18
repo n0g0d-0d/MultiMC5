@@ -21,10 +21,11 @@
 #include <QJsonObject>
 #include <QPair>
 #include <QMap>
-
 #include <memory>
+
 #include "AuthSession.h"
 #include "Usable.h"
+#include <QObjectPtr.h>
 
 #include "multimc_logic_export.h"
 
@@ -129,6 +130,10 @@ public: /* queries */
 
     //! Returns whether the account is NotVerified, Verified or Online
     AccountStatus accountStatus() const;
+
+    shared_qobject_ptr<Task> uploadSkin();
+    shared_qobject_ptr<Task> deleteSkin();
+    shared_qobject_ptr<Task> refreshProfile();
 
 signals:
     /**

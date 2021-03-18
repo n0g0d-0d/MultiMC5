@@ -3,15 +3,15 @@
 #include <QHttpMultiPart>
 #include <Env.h>
 
-SkinDelete::SkinDelete(QObject *parent, AuthSessionPtr session)
-    : Task(parent), m_session(session)
+SkinDelete::SkinDelete(QObject *parent, const QString &access_token)
+    : Task(parent), m_access_token(access_token)
 {
 }
 
 void SkinDelete::executeTask()
 {
     QNetworkRequest request(QUrl("https://api.minecraftservices.com/minecraft/profile/skins/active"));
-    request.setRawHeader("Authorization", QString("Bearer %1").arg(m_session->access_token).toLocal8Bit());
+    request.setRawHeader("Authorization", QString("Bearer %1").arg(m_access_token).toLocal8Bit());
     QNetworkReply *rep = ENV.qnam().deleteResource(request);
     m_reply = std::shared_ptr<QNetworkReply>(rep);
 

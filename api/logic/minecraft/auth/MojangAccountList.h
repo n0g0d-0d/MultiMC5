@@ -21,8 +21,11 @@
 #include <QVariant>
 #include <QAbstractListModel>
 #include <QSharedPointer>
+#include <QObjectPtr.h>
 
 #include "multimc_logic_export.h"
+
+#include "minecraft/services/GetProfile.h"
 
 /*!
  * \brief List of available Mojang accounts.
@@ -182,6 +185,9 @@ protected:
      * Ignored if m_listFilePath is blank.
      */
     bool m_autosave = false;
+
+    // refreshing accounts, one at a time?
+    shared_qobject_ptr<Task> m_refreshTask;
 
 protected
 slots:

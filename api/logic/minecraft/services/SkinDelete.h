@@ -13,11 +13,11 @@ class MULTIMC_LOGIC_EXPORT SkinDelete : public Task
 {
     Q_OBJECT
 public:
-    SkinDelete(QObject *parent, AuthSessionPtr session);
+    SkinDelete(QObject *parent, const QString & m_access_token);
     virtual ~SkinDelete() = default;
 
 private:
-    AuthSessionPtr m_session;
+    QString m_access_token;
     std::shared_ptr<QNetworkReply> m_reply;
 
 protected:

@@ -18,7 +18,7 @@ void AssetUpdateTask::executeTask()
 {
     setStatus(tr("Updating assets index..."));
     auto components = m_inst->getPackProfile();
-    auto profile = components->getProfile();
+    auto profile = components->getLaunchProfile();
     auto assets = profile->getMinecraftAssets();
     QUrl indexUrl = assets->url;
     QString localPath = assets->id + ".json";
@@ -55,7 +55,7 @@ void AssetUpdateTask::assetIndexFinished()
     qDebug() << m_inst->name() << ": Finished asset index download";
 
     auto components = m_inst->getPackProfile();
-    auto profile = components->getProfile();
+    auto profile = components->getLaunchProfile();
     auto assets = profile->getMinecraftAssets();
 
     QString asset_fname = "assets/indexes/" + assets->id + ".json";

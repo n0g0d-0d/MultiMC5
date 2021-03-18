@@ -142,7 +142,7 @@ QSet<QString> MinecraftInstance::traits() const
     {
         return {"version-incomplete"};
     }
-    auto profile = components->getProfile();
+    auto profile = components->getLaunchProfile();
     if (!profile)
     {
         return {"version-incomplete"};
@@ -248,14 +248,14 @@ QStringList MinecraftInstance::getClassPath() const
 {
     QStringList jars, nativeJars;
     auto javaArchitecture = settings()->get("JavaArchitecture").toString();
-    auto profile = m_components->getProfile();
+    auto profile = m_components->getLaunchProfile();
     profile->getLibraryFiles(javaArchitecture, jars, nativeJars, getLocalLibraryPath(), binRoot());
     return jars;
 }
 
 QString MinecraftInstance::getMainClass() const
 {
-    auto profile = m_components->getProfile();
+    auto profile = m_components->getLaunchProfile();
     return profile->getMainClass();
 }
 
@@ -263,7 +263,7 @@ QStringList MinecraftInstance::getNativeJars() const
 {
     QStringList jars, nativeJars;
     auto javaArchitecture = settings()->get("JavaArchitecture").toString();
-    auto profile = m_components->getProfile();
+    auto profile = m_components->getLaunchProfile();
     profile->getLibraryFiles(javaArchitecture, jars, nativeJars, getLocalLibraryPath(), binRoot());
     return nativeJars;
 }
@@ -392,7 +392,7 @@ static QString replaceTokensIn(QString text, QMap<QString, QString> with)
 
 QStringList MinecraftInstance::processMinecraftArgs(AuthSessionPtr session) const
 {
-    auto profile = m_components->getProfile();
+    auto profile = m_components->getLaunchProfile();
     QString args_pattern = profile->getMinecraftArguments();
     for (auto tweaker : profile->getTweakers())
     {
@@ -441,7 +441,7 @@ QString MinecraftInstance::createLaunchScript(AuthSessionPtr session)
 
     if (!m_components)
         return QString();
-    auto profile = m_components->getProfile();
+    auto profile = m_components->getLaunchProfile();
     if(!profile)
         return QString();
 
@@ -513,7 +513,7 @@ QStringList MinecraftInstance::verboseDescription(AuthSessionPtr session)
     out << "Main Class:" << "  " + getMainClass() << "";
     out << "Native path:" << "  " + getNativePath() << "";
 
-    auto profile = m_components->getProfile();
+    auto profile = m_components->getLaunchProfile();
 
     auto alltraits = traits();
     if(alltraits.size())
@@ -969,7 +969,7 @@ std::shared_ptr<GameOptions> MinecraftInstance::gameOptionsModel() const
 
 QList< Mod > MinecraftInstance::getJarMods() const
 {
-    auto profile = m_components->getProfile();
+    auto profile = m_components->getLaunchProfile();
     QList<Mod> mods;
     for (auto jarmod : profile->getJarMods())
     {

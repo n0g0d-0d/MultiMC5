@@ -16,7 +16,7 @@ void LibrariesTask::executeTask()
 
     // Build a list of URLs that will need to be downloaded.
     auto components = inst->getPackProfile();
-    auto profile = components->getProfile();
+    auto profile = components->getLaunchProfile();
 
     auto job = new NetJob(tr("Libraries for instance %1").arg(inst->name()));
     downloadJob.reset(job);

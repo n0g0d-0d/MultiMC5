@@ -88,7 +88,7 @@ public:
     /// get current running task...
     shared_qobject_ptr<Task> getCurrentTask();
 
-    std::shared_ptr<LaunchProfile> getProfile() const;
+    std::shared_ptr<LaunchProfile> getLaunchProfile() const;
 
     // NOTE: used ONLY by MinecraftInstance to provide legacy version mappings from instance config
     void setOldConfigVersion(const QString &uid, const QString &version);

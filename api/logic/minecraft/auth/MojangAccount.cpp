@@ -124,20 +124,12 @@ QJsonObject MojangAccount::saveToJson() const
     QJsonObject userStructure;
     {
         userStructure.insert("id", m_user.id);
-        /*
-        QJsonObject userAttrs;
-        for(auto key: m_user.properties.keys())
-        {
-            auto array = QJsonArray::fromStringList(m_user.properties.values(key));
-            userAttrs.insert(key, array);
-        }
-        userStructure.insert("properties", userAttrs);
-        */
     }
     json.insert("user", userStructure);
 
-    if (m_currentProfile != -1)
+    if (m_currentProfile != -1) {
         json.insert("activeProfile", currentProfile()->id);
+    }
 
     return json;
 }

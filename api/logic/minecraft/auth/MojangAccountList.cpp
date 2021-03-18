@@ -143,6 +143,8 @@ void MojangAccountList::setActiveAccount(const QString &username)
             emit dataChanged(index(currentActiveAccountIdx), index(currentActiveAccountIdx));
             emit dataChanged(index(newActiveAccountIdx), index(newActiveAccountIdx));
             m_activeAccount = newActiveAccount;
+            m_refreshTask.reset(new GetProfile(this, m_activeAccount->accessToken()));
+            m_refreshTask->start();
             onActiveChanged();
         }
     }

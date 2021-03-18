@@ -28,11 +28,10 @@ namespace SkinUtils
 /*
  * Given a username, return a pixmap of the cached skin (if it exists), QPixmap() otherwise
  */
-QPixmap getFaceFromCache(QString username, int height, int width)
+QPixmap getFaceFromCache(QString profileId, int height, int width)
 {
-    QFile fskin(ENV.metacache()
-                    ->resolveEntry("skins", username + ".png")
-                    ->getFullPath());
+    auto cacheEntry = ENV.metacache()->resolveEntry("skins", profileId + ".png");
+    QFile fskin(cacheEntry->getFullPath());
 
     if (fskin.exists())
     {
